@@ -8,7 +8,7 @@ export const Header = () => {
     <header className="bg-gray-500">
       <nav>
         <NavLink hrefUrl={AppRoutes.DASHBOARD} text="Dashboard" />
-        <NavLink hrefUrl={AppRoutes.USERS} text="Users" />
+        <NavLink hrefUrl={AppRoutes.POSTS} text="Posts" />
         <NavLink hrefUrl={AppRoutes.ABOUT} text="About" />
       </nav>
     </header>
