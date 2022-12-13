@@ -1,8 +1,25 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
+import { useQuery, gql } from '@apollo/client';
 
 export default function Home() {
+  const { data, loading, error } = useQuery(gql`
+    query GetProductList {
+      products {
+        id
+        slug
+        name
+        description
+        price
+        images {
+          width
+          height
+          url
+        }
+      }
+    }
+  `);
+
+  console.log(data, loading, error);
   return (
     <div>
       <Head>
