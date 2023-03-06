@@ -12,7 +12,6 @@ import {
 } from '../../generated/graphql';
 
 const Product = ({ data, notFound }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  console.log(notFound);
   return (
     <div>
       <div className="my-4">
