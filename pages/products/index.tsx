@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from 'next';
-import Link from 'next/link';
 
+import { ProductListItem } from '../../components/productListItem/ProductListItem';
 import { GetProductListDocument, GetProductListQuery } from '../../generated/graphql';
 import { apolloClient } from '../../graphql/apolloClient';
 import { AppRoutes } from '../../types/AppRoutes';
@@ -8,12 +8,10 @@ import { AppRoutes } from '../../types/AppRoutes';
 const ProductsPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <div>
-      Posts:
-      <div>
-        {data.products.map((product) => (
-          <div key={product.id} className="px-2 odd:bg-slate-300">
-            <Link href={`${AppRoutes.PRODUCTS}/${product.slug}`}>{product.name}</Link>
-          </div>
+      Products:
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-6">
+        {data.products.map(({ id, name, images, slug, price }) => (
+          <ProductListItem key={id} name={name} slug={slug} images={images} price={price}></ProductListItem>
         ))}
       </div>
     </div>
