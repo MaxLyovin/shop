@@ -1,5 +1,6 @@
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
+import Head from 'next/head';
 
 import { apolloClient } from '../../graphql/apolloClient';
 import { AppRoutes } from '../../types/AppRoutes';
@@ -13,13 +14,18 @@ import {
 
 const Product = ({ data, notFound }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <div>
-      <div className="my-4">
-        <Link href={AppRoutes.PRODUCTS}>{`<-- go back to posts`}</Link>
+    <>
+      <Head>
+        <title>{data?.product?.name}</title>
+      </Head>
+      <div>
+        <div className="my-4">
+          <Link href={AppRoutes.PRODUCTS}>{`<-- go back to posts`}</Link>
+        </div>
+        <p>{data?.product?.name}</p>
+        <p>{data?.product?.description}</p>
       </div>
-      <p>{data?.product?.name}</p>
-      <p>{data?.product?.description}</p>
-    </div>
+    </>
   );
 };
 
