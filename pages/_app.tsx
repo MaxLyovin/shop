@@ -1,16 +1,18 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { ApolloProvider } from '@apollo/client';
+import { DefaultSeo } from 'next-seo';
 
-import { apolloClient } from '../graphql/apolloClient';
+import SEO from '../nex-seo.config';
 import { Layout } from '../components/layout/Layout';
+import { AppProviders } from '../providers/AppProviders';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={apolloClient}>
+    <AppProviders>
       <Layout>
+        <DefaultSeo {...SEO} />
         <Component {...pageProps} />
       </Layout>
-    </ApolloProvider>
+    </AppProviders>
   );
 }

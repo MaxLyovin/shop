@@ -9,9 +9,6 @@ import { LayoutProps } from './Layout.types';
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <div className="flex flex-col min-h-screen max-w-screen-2xl mx-auto">
         <Header />
         <Main>{children}</Main>
