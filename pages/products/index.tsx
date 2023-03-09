@@ -1,5 +1,5 @@
 import { InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
 import { ProductListItem } from '../../components/productListItem/ProductListItem';
 import { GetProductListDocument, GetProductListQuery } from '../../generated/graphql';
@@ -9,9 +9,7 @@ import { AppRoutes } from '../../types/AppRoutes';
 const ProductsPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
-      <Head>
-        <title>Products</title>
-      </Head>
+      <NextSeo title="Products" />
       <div>
         Products:
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-6">

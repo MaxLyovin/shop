@@ -1,7 +1,8 @@
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 
+import { APP_URL, APP_NAME } from '../../consts';
 import { apolloClient } from '../../graphql/apolloClient';
 import { AppRoutes } from '../../types/AppRoutes';
 import {
@@ -12,18 +13,31 @@ import {
   GetProductsSlugsQuery,
 } from '../../generated/graphql';
 
-const Product = ({ data, notFound }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Product = ({ product, notFound }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
-      <Head>
-        <title>{data?.product?.name}</title>
-      </Head>
+      <NextSeo
+        title={product?.name}
+        openGraph={{
+          url: `${APP_URL}${product?.slug}`,
+          title: product?.name,
+          description: product?.description,
+          images: [
+            {
+              url: product?.images[0].url as string,
+              alt: 'Og Image Alt',
+              type: 'image/jpeg',
+            },
+          ],
+          siteName: APP_NAME,
+        }}
+      />
       <div>
         <div className="my-4">
           <Link href={AppRoutes.PRODUCTS}>{`<-- go back to posts`}</Link>
         </div>
-        <p>{data?.product?.name}</p>
-        <p>{data?.product?.description}</p>
+        <p>{product?.name}</p>
+        <p>{product?.description}</p>
       </div>
     </>
   );
@@ -62,5 +76,5 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext<{ slug: s
     };
   }
 
-  return { props: { data } };
+  return { props: { product: data.product } };
 };
