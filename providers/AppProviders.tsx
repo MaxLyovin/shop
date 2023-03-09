@@ -1,10 +1,10 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
 
-import { apolloClient } from '../graphql/apolloClient';
-
 import { CartProvider } from './cart/CartProvider';
 import { AppProvidersProps } from './AppProviders.types';
+
+import { apolloClient } from '@/graphql/apolloClient';
 
 export const AppProviders = ({ children }: AppProvidersProps) => {
   return (
