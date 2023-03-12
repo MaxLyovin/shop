@@ -13,8 +13,8 @@ const ProductsPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) 
       <div>
         Products:
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-6">
-          {data.products.map(({ id, name, images, slug, price }) => (
-            <ProductListItem key={id} name={name} slug={slug} images={images} price={price}></ProductListItem>
+          {data.products.map((product) => (
+            <ProductListItem key={product.id} {...product}></ProductListItem>
           ))}
         </div>
       </div>

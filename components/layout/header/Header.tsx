@@ -7,7 +7,7 @@ import { NavLink } from './navLink/NavLink';
 
 export const Header = () => {
   return (
-    <header className="bg-gray-500 h-10 flex  items-center justify-between px-4">
+    <header className="bg-gray-500 h-10 flex  items-center justify-between px-6">
       <nav className="flex justify-center items-center gap-4 md:gap-8 lg:gap-12 text-lg">
         <NavLink hrefUrl={AppRoutes.DASHBOARD} text="Dashboard" />
         <NavLink hrefUrl={AppRoutes.ABOUT} text="About" />
