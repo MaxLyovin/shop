@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useCartState } from '@/hooks/useCartState';
+import { formatToDollars } from 'services/currency/currencyFormatter';
 
 const Cart = () => {
   const { items, fullyRemoveItemFromCart, getCartTotalItems, getCartTotalPrice } = useCartState();
@@ -17,7 +18,7 @@ const Cart = () => {
                 <p>{name}</p>
                 <div className="flex gap-4 items-center">
                   <p>amount: {amount}</p>
-                  <p>total price: {price * amount}</p>
+                  <p>total price: {formatToDollars(price * amount)}</p>
                   <button onClick={() => fullyRemoveItemFromCart(id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +44,7 @@ const Cart = () => {
       <div className="p-4">
         <p className="font-bold">Cart summary</p>
         <p>Total items: {getCartTotalItems()}</p>
-        <p>Total price: {getCartTotalPrice()}</p>
+        <p>Total price: {formatToDollars(getCartTotalPrice())}</p>
       </div>
     </div>
   );
