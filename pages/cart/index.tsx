@@ -3,7 +3,7 @@ import React from 'react';
 import { useCartState } from '@/hooks/useCartState';
 import { formatToDollars } from 'services/currency/currencyFormatter';
 
-const Cart = () => {
+const CartPage = () => {
   const { items, fullyRemoveItemFromCart, getCartTotalItems, getCartTotalPrice } = useCartState();
 
   return !items.length ? (
@@ -50,4 +50,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;
