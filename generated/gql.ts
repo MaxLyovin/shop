@@ -13,9 +13,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
+    "mutation CreateProductReview($review: ReviewCreateInput!) {\n  review: createReview(data: $review) {\n    id\n    stage\n  }\n}": types.CreateProductReviewDocument,
     "query GetProductsSlugs {\n  products {\n    slug\n  }\n}\n\nquery GetProductDetailsBySlug($slug: String) {\n  product(where: {slug: $slug}) {\n    id\n    name\n    slug\n    price\n    description\n    images {\n      url\n      width\n      height\n    }\n  }\n}\n\nquery GetProductList {\n  products {\n    id\n    slug\n    name\n    description\n    price\n    images {\n      width\n      height\n      url\n    }\n  }\n}": types.GetProductsSlugsDocument,
 };
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "mutation CreateProductReview($review: ReviewCreateInput!) {\n  review: createReview(data: $review) {\n    id\n    stage\n  }\n}"): (typeof documents)["mutation CreateProductReview($review: ReviewCreateInput!) {\n  review: createReview(data: $review) {\n    id\n    stage\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

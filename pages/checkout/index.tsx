@@ -29,12 +29,12 @@ const CheckoutPage = () => {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div>
             <div>
-              <h3 className="mb-1 text-xl">Contact Information</h3>
+              <h3 className="mb-4 text-xl">Contact Information</h3>
               <Input name="email" label="Email addres" />
               <Input name="phone" label="Second name" />
             </div>
             <div>
-              <h3 className="mb-1 text-xl">Shipping Information</h3>
+              <h3 className="mb-4 text-xl">Shipping Information</h3>
               <div className="grid grid-cols-2 gap-3">
                 <Input name="firstName" label="First name" />
                 <Input name="secondName" label="Second name" />

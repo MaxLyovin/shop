@@ -1,11 +1,13 @@
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
 import { NextSeo } from 'next-seo';
+import { useMutation } from '@apollo/client';
 
 import { APP_URL, APP_NAME } from '../../consts';
 import { apolloClient } from '../../graphql/apolloClient';
 import { AppRoutes } from '../../types/AppRoutes';
 import {
+  CreateProductReviewDocument,
   GetProductDetailsBySlugDocument,
   GetProductDetailsBySlugQuery,
   GetProductDetailsBySlugQueryVariables,
@@ -13,7 +15,25 @@ import {
   GetProductsSlugsQuery,
 } from '../../generated/graphql';
 
-const Product = ({ product, notFound }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const ProductPage = ({ product, notFound }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const [sendOpinion, { data, loading, error }] = useMutation(CreateProductReviewDocument);
+
+  const handleClick = () => {
+    sendOpinion({
+      variables: {
+        review: {
+          headline: 'From App',
+          name: 'some one',
+          email: 'some@email.com',
+          content: 'good good!',
+          rating: 5,
+        },
+      },
+    });
+  };
+
+  console.log(error, loading, data);
+
   return (
     <>
       <NextSeo
@@ -38,12 +58,16 @@ const Product = ({ product, notFound }: InferGetStaticPropsType<typeof getStatic
         </div>
         <p>{product?.name}</p>
         <p>{product?.description}</p>
+
+        <button onClick={handleClick} className="m5 border p-2">
+          send opinion
+        </button>
       </div>
     </>
   );
 };
 
-export default Product;
+export default ProductPage;
 
 export async function getStaticPaths() {
   const { data } = await apolloClient.query<GetProductsSlugsQuery>({
