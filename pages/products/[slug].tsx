@@ -32,8 +32,6 @@ const ProductPage = ({ product, notFound }: InferGetStaticPropsType<typeof getSt
     });
   };
 
-  console.log(error, loading, data);
-
   return (
     <>
       <NextSeo

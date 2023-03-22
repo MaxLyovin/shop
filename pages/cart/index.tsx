@@ -1,10 +1,43 @@
 import React from 'react';
+import { useMutation } from 'react-query';
+import { useStripe } from '@stripe/react-stripe-js';
 
 import { useCartState } from '@/hooks/useCartState';
-import { formatToDollars } from 'services/currency/currencyFormatter';
+import { formatToZloty } from 'services/currency/currencyFormatter';
+
+type LineItem = {
+  price_data: { currency: string; unit_amount: number; product_data: { name: string } };
+  quantity: number;
+};
 
 const CartPage = () => {
   const { items, fullyRemoveItemFromCart, getCartTotalItems, getCartTotalPrice } = useCartState();
+  const stripe = useStripe();
+
+  const { mutate, isLoading } = useMutation(
+    (data: LineItem[]) => {
+      return fetch('http://localhost:3000/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    },
+    {
+      onSuccess: async (data) => {
+        const response = await data.json();
+        await stripe?.redirectToCheckout({ sessionId: response?.session?.id });
+      },
+    },
+  );
+
+  const handleClick = () => {
+    mutate(
+      items.map((item) => ({
+        price_data: { currency: 'PLN', unit_amount: item.price, product_data: { name: item.name } },
+        quantity: item.amount,
+      })),
+    );
+  };
 
   return !items.length ? (
     <>Cart is empty</>
@@ -18,7 +51,7 @@ const CartPage = () => {
                 <p>{name}</p>
                 <div className="flex gap-4 items-center">
                   <p>amount: {amount}</p>
-                  <p>total price: {formatToDollars(price * amount)}</p>
+                  <p>total price: {formatToZloty(price * amount)}</p>
                   <button onClick={() => fullyRemoveItemFromCart(id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +77,14 @@ const CartPage = () => {
       <div className="p-4">
         <p className="font-bold">Cart summary</p>
         <p>Total items: {getCartTotalItems()}</p>
-        <p>Total price: {formatToDollars(getCartTotalPrice())}</p>
+        <p>Total price: {formatToZloty(getCartTotalPrice())}</p>
+        <button
+          onClick={handleClick}
+          type="button"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        >
+          {isLoading ? 'Loading...' : 'Make order'}
+        </button>
       </div>
     </div>
   );
