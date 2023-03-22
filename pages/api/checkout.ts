@@ -15,6 +15,12 @@ const checkoutHander: NextApiHandler = async (req, res) => {
     res.status(405).json({ message: 'Method not allowed' });
     return;
   }
+  // check price with BE data before creating stripe checkout session
+  // const {
+  //   data: { products },
+  // } = await apolloClient.query<GetProductListQuery>({
+  //   query: GetProductListDocument,
+  // });
 
   const stripe = new Stripe(stripeKey, { apiVersion: '2022-11-15' });
   const stripeCheckoutSession = await stripe.checkout.sessions.create({

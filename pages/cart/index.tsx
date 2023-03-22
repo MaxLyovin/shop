@@ -34,6 +34,7 @@ const CartPage = () => {
     mutate(
       items.map((item) => ({
         price_data: { currency: 'PLN', unit_amount: item.price, product_data: { name: item.name } },
+        adjustable_quantity: { enabled: true, minimum: 1, maximum: 10 },
         quantity: item.amount,
       })),
     );
